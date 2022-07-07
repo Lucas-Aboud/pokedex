@@ -43,10 +43,10 @@ a,
 }
 
 @media (min-width: 1024px) {
-  body {
-    /* display: flex;
-    place-items: center; */
-  }
+  /* body {
+    display: flex;
+    place-items: center;
+  } */
 
   #app {
     display: grid;
