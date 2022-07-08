@@ -5,7 +5,15 @@
     <v-conteiner>
       <v-card>
         <v-conteiner>
-          {{ pokemons }}
+          <v-row>
+            <v-col cols="2" v-for="pokemon in pokemons" :key="pokemon.name">
+              <v-card>
+                <v-container> 
+                  <h3>{{pokemon.name}}</h3>
+                </v-container>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-conteiner>
       </v-card>
     </v-conteiner>
@@ -13,7 +21,6 @@
 </template>
 
 <script>
-
 import axios from "axios";
 
 export default {
@@ -24,7 +31,7 @@ export default {
       pokemons: [],
     };
   },
- //  Aqui eu chamo os 151 pokemons inicais que quero apresentar na tela
+  //  Aqui eu chamo os 151 pokemons inicais que quero apresentar na tela
   mounted() {
     axios
       .get("https://pokeapi.co/api/v2/pokemon?limit=151")
