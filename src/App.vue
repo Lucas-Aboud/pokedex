@@ -6,10 +6,22 @@
       <v-card>
         <v-conteiner>
           <v-row>
-            <v-col cols="2" v-for="pokemon in pokemons" :key="pokemon.name">
+            <v-col
+              cols="3"
+              v-for="pokemon in pokemons.slice(0, 12)"
+              :key="pokemon.name"
+            >
               <v-card>
-                <v-container> 
-                  <h3>{{pokemon.name}}</h3>
+                <v-container>
+                  {{ get_id(pokemon) }}
+                  <img
+                    :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${get_id(
+                      pokemon
+                    )}.png`"
+                    :alt="pokemon.name"
+                    width="100%"
+                  />
+                  <h3 class="text-center">{{ pokemon.name }}</h3>
                 </v-container>
               </v-card>
             </v-col>
@@ -39,6 +51,13 @@ export default {
         this.pokemons = response.data.results;
       });
   },
+
+  // Estou extraindo o id de cada pokemon para que ele puxe a imagem de acordo
+  methods: {
+    get_id(pokemon) {
+      return pokemon.url.split("/")[6];
+    },
+  },
 };
 </script>
 
@@ -57,4 +76,4 @@ export default {
   background-position: center;
   min-height: 100vh;
 }
-</style>
+</styl>
