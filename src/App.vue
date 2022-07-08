@@ -1,3 +1,5 @@
+
+// aqui rendenizo aqui a landing page
 <template>
   <v-app>
     <v-conteiner>
@@ -22,7 +24,7 @@ export default {
       pokemons: [],
     };
   },
- //  Aqui eu chamo os pokemons que quero apresentar na tela
+ //  Aqui eu chamo os 151 pokemons inicais que quero apresentar na tela
   mounted() {
     axios
       .get("https://pokeapi.co/api/v2/pokemon?limit=151")
