@@ -1,73 +1,51 @@
-<script setup>
-import Pokelanding from "./components/Pokelanding.vue";
-</script>
-
 <template>
-  <spam>
-    <Pokelanding msg="Amendoin" />
-    <Pokelanding msg="Cervejinha" />
-  </spam>
+  <v-app>
+    <v-conteiner>
+      <v-card>
+        <v-conteiner>
+          {{ pokemons }}
+        </v-conteiner>
+      </v-card>
+    </v-conteiner>
+  </v-app>
 </template>
 
+<script>
+
+import axios from "axios";
+
+export default {
+  name: "App",
+
+  data() {
+    return {
+      pokemons: [],
+    };
+  },
+ //  Aqui eu chamo os pokemons que quero apresentar na tela
+  mounted() {
+    axios
+      .get("https://pokeapi.co/api/v2/pokemon?limit=151")
+      .then((response) => {
+        this.pokemons = response.data.results;
+      });
+  },
+};
+</script>
+
 <style>
-@import "./assets/base.css";
-
 #app {
-  max-width: 1280px;
-  /* margin: 0 auto; */
-  padding: 2rem;
-
-  font-weight: normal;
-}
-
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  /* body {
-    display: flex;
-    place-items: center;
-  } */
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+  background: linear-gradient(
+      to bottom right,
+      rgba(10, 10, 10, 1),
+      rgba(12, 39, 63, 1)
+    )
+    no-repeat center center fixed !important;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }
 </style>
