@@ -2,46 +2,46 @@
 <template>
   <v-app>
     <v-conteiner>
-      
-        <v-conteiner>
-          <v-text-field
-            v-model="search"
-            label="Busca"
-            placeholder="Procure seu Pokémon aqui pelo nome"
-            solo
-          ></v-text-field>
-          <v-row>
-            <v-col
-              cols="3"
-              v-for="pokemon in pokemons_filtrados"
-              :key="pokemon.name">
-              <v-card @click="show_dialog =  !show_dialog">
-                <v-container>
-                  {{ get_id(pokemon) }}
-                  <v-row class="mx-0 dflex justify-center">
-                    <img
-                      :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${get_id(
-                        pokemon
-                      )}.png`"
-                      :alt="pokemon.name"
-                      width="80%"
-                    />
-                  </v-row>
-                  <h3 class="text-center">{{ get_name(pokemon) }}</h3>
-                </v-container>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-conteiner>
-      
+      <v-conteiner>
+        <v-text-field
+          v-model="search"
+          label="Busca"
+          placeholder="Procure seu Pokémon aqui pelo nome"
+          solo
+        ></v-text-field>
+        <v-row>
+          <v-col
+            cols="3"
+            v-for="pokemon in pokemons_filtrados"
+            :key="pokemon.name"
+          >
+            <v-card @click="show_dialog = !show_dialog">
+              <v-container>
+                {{ get_id(pokemon) }}
+                <v-row class="mx-0 dflex justify-center">
+                  <img
+                    :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${get_id(
+                      pokemon
+                    )}.png`"
+                    :alt="pokemon.name"
+                    width="80%"
+                  />
+                </v-row>
+                <h3 class="text-center">{{ get_name(pokemon) }}</h3>
+              </v-container>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-conteiner>
     </v-conteiner>
 
     <v-dialog v-model="show_dialog" width="500">
       <v-card>
-        <v-card-title class="text-h5  black lighten-2">
-          Nome do poke
-        </v-card-title> 
+       <v-container>
+        
+       </v-container>
       </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
