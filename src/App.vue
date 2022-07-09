@@ -1,14 +1,28 @@
-// aqui rendenizo aqui a landing page
 <template>
   <v-app>
     <v-conteiner>
       <v-conteiner>
+        <v-row>
+          <v-conteiner>
+            <v-img
+              :src="require('../src/assets/logo.png')"
+              class="my-3"
+              contain
+              height="200"
+            />
+            <h1 class="text-center yellow--text mb-2" style="font-size: 5rem">
+              Pokédex
+            </h1>
+          </v-conteiner>
+        </v-row>
+
         <v-text-field
           v-model="search"
           label="Busca"
           placeholder="Procure seu Pokémon aqui pelo nome"
           solo
         ></v-text-field>
+
         <v-row>
           <v-col
             cols="3"
@@ -37,9 +51,7 @@
 
     <v-dialog v-model="show_dialog" width="500">
       <v-card>
-       <v-container>
-        
-       </v-container>
+        <v-container> </v-container>
       </v-card>
     </v-dialog>
   </v-app>
@@ -100,4 +112,4 @@ export default {
   background-position: center;
   min-height: 100vh;
 }
-</styl>
+</style>
