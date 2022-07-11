@@ -10,7 +10,7 @@
               contain
               height="200"
             />
-            <h1 class="text-center yellow--text mb-2" style="font-size: 5rem">
+            <h1 class="text-center yellow--text mb-2" style="font-size: 6rem">
               Pokédex
             </h1>
           </v-conteiner>
@@ -29,14 +29,12 @@
             v-for="pokemon in pokemons_filtrados"
             :key="pokemon.name"
           >
-            <v-card @click="show_dialog = !show_dialog">
+            <v-card @click="show_dialog = !show_dialog" width="700">
               <v-container>
                 <!-- {{ get_id(pokemon) }} -->
                 <v-row class="mx-0 dflex justify-center">
                   <img
-                    :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${get_id(
-                      pokemon
-                    )}.png`"
+                    :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${get_id(pokemon)}.png`"
                     :alt="pokemon.name"
                     width="80%"
                   />
@@ -49,8 +47,8 @@
       </v-conteiner>
     </v-conteiner>
 
-    <v-dialog v-model="show_dialog" width="500">
-      <v-card>
+    <v-dialog v-model="show_dialog" width="700">
+      <v-card v-if="selecte">
         <v-container>
         {{selected_pokemon}}
         </v-container>
@@ -80,7 +78,14 @@ export default {
       });
   },
 
-  // Estou extraindo o id de cada pokemon para que ele puxe a imagem de acordo e colocando a primeira letra em Uppercasez'
+
+// Aqui vou selecionar uma cor de acordo com o tioo do pokemon
+  // color_selected(string) {
+  //   if (string === fire)
+
+
+  // }  
+  // Estou extraindo o id de cada pokemon para puxar a imagem de acordo e colocando a primeira letra em Uppercasez'
   methods: {
     get_id(pokemon) {
       return pokemon.url.split("/")[6];
@@ -88,6 +93,7 @@ export default {
     get_name(pokemon) {
       return pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     },
+    
     show_pokemon(id) {
       axios
       .get(`https://pokeapi.co/api/v2/pokemon/${id} `)
