@@ -31,7 +31,7 @@
           >
             <v-card @click="show_dialog = !show_dialog">
               <v-container>
-                {{ get_id(pokemon) }}
+                <!-- {{ get_id(pokemon) }} -->
                 <v-row class="mx-0 dflex justify-center">
                   <img
                     :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${get_id(
@@ -51,7 +51,9 @@
 
     <v-dialog v-model="show_dialog" width="500">
       <v-card>
-        <v-container> </v-container>
+        <v-container>
+        {{selected_pokemon}}
+        </v-container>
       </v-card>
     </v-dialog>
   </v-app>
@@ -78,7 +80,7 @@ export default {
       });
   },
 
-  // Estou extraindo o id de cada pokemon para que ele puxe a imagem de acordo
+  // Estou extraindo o id de cada pokemon para que ele puxe a imagem de acordo e colocando a primeira letra em Uppercasez'
   methods: {
     get_id(pokemon) {
       return pokemon.url.split("/")[6];
@@ -86,6 +88,14 @@ export default {
     get_name(pokemon) {
       return pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     },
+    show_pokemon(id) {
+      axios
+      .get(`https://pokeapi.co/api/v2/pokemon/${id} `)
+      .then((response) => {
+        this.selected_pokemon = response.data;
+        this.show_dialog = !this.show_dialog;
+      }); 
+    }
   },
   computed: {
     pokemons_filtrados() {
