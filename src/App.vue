@@ -29,9 +29,9 @@
             v-for="pokemon in pokemons_filtrados"
             :key="pokemon.name"
           >
-            <v-card v-on:click="show_dialog = !show_dialog" width="700">
+            <v-card v-on:click="toggle_modal(pokemon)" width="700">
               <v-container>
-                <!-- {{ get_id(pokemon) }} -->
+                {{ get_id(pokemon) }}
                 <v-row class="mx-0 dflex justify-center">
                   <img
                     :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${get_id(
@@ -49,43 +49,24 @@
       </v-conteiner>
     </v-conteiner>
 
-    <!-- <v-dialog v-model="show_dialog" width="700">
-      <v-card v-if="selected_pokemon">
-        <v-container>
-        {{selected_pokemon}}
-        </v-container>
-      </v-card>
-    </v-dialog> -->
     <div class="text-center">
       <v-dialog v-model="show_dialog" width="500">
         <v-card>
-          <v-card-title class="text-h5 grey lighten-2">
-            Privacy Policy
-          </v-card-title>
+          <img
+            class="img-card"
+            :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${get_id(
+              modal_pokemon
+            )}.png`"
+          />
+          <v-card>
+            <h2 class="text-center">{{ get_name(modal_pokemon) }}</h2>
+          </v-card>
 
-          <v-card-text >
-            
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          <v-card-text v-if="modal_pokemon" class="card-text">
+            <p>Tipo: {{ modal_pokemon.type }}</p>
           </v-card-text>
 
           <v-divider></v-divider>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <!-- <v-btn
-            color="primary"
-            text
-            @click="dialog = false"
-          >
-            I accept
-          </v-btn> -->
-          </v-card-actions>
         </v-card>
       </v-dialog>
     </div>
@@ -106,6 +87,7 @@ export default {
       pokemons: [],
       search: "",
       show_dialog: false,
+      modal_pokemon: null,
     };
   },
   //  Aqui eu chamo os 151 pokemons inicais que quero apresentar na tela
@@ -117,19 +99,26 @@ export default {
       });
   },
 
-  // Aqui vou selecionar uma cor de acordo com o tiopo do pokemon
-  //   color_selected(tipo_pokemon) {
-  //     if (tipo_pokemon === elemento)
-  //     color('red')
-  //   }
-
   // Estou extraindo o id de cada pokemon para puxar a imagem de acordo e colocando a primeira letra em Uppercasez'
   methods: {
     get_id(pokemon) {
-      return pokemon.url.split("/")[6];
+      if (pokemon && pokemon.url) return pokemon.url.split("/")[6];
     },
     get_name(pokemon) {
-      return pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+      if (pokemon && pokemon.name)
+        return pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+    },
+
+    toggle_modal(pokemon) {
+      this.modal_pokemon = pokemon;
+
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+        .then((response) => {
+          this.modal_pokemon.type = response.data.types[0].type.name;
+          this.modal_pokemon.type_url = response.data.types[0].type.url;
+          this.show_dialog = true;
+        });
     },
 
     show_pokemon(id) {
@@ -162,5 +151,20 @@ export default {
   background-size: cover;
   background-position: center;
   min-height: 100vh;
+}
+
+.card-text {
+  text-align: center;
+  color: #0000;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 16px;
+}
+
+.img-card {
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
