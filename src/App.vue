@@ -29,12 +29,14 @@
             v-for="pokemon in pokemons_filtrados"
             :key="pokemon.name"
           >
-            <v-card @click="show_dialog = !show_dialog" width="700">
+            <v-card v-on:click="show_dialog = !show_dialog" width="700">
               <v-container>
                 <!-- {{ get_id(pokemon) }} -->
                 <v-row class="mx-0 dflex justify-center">
                   <img
-                    :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${get_id(pokemon)}.png`"
+                    :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${get_id(
+                      pokemon
+                    )}.png`"
                     :alt="pokemon.name"
                     width="80%"
                   />
@@ -47,17 +49,53 @@
       </v-conteiner>
     </v-conteiner>
 
-    <v-dialog v-model="show_dialog" width="700">
-      <v-card v-if="selecte">
+    <!-- <v-dialog v-model="show_dialog" width="700">
+      <v-card v-if="selected_pokemon">
         <v-container>
         {{selected_pokemon}}
         </v-container>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
+    <div class="text-center">
+      <v-dialog v-model="show_dialog" width="500">
+        <v-card>
+          <v-card-title class="text-h5 grey lighten-2">
+            Privacy Policy
+          </v-card-title>
+
+          <v-card-text >
+            
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <!-- <v-btn
+            color="primary"
+            text
+            @click="dialog = false"
+          >
+            I accept
+          </v-btn> -->
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
   </v-app>
 </template>
 
+
+
 <script>
+// Importo a biblioteca axios para consumir a API
 import axios from "axios";
 
 export default {
@@ -67,6 +105,7 @@ export default {
     return {
       pokemons: [],
       search: "",
+      show_dialog: false,
     };
   },
   //  Aqui eu chamo os 151 pokemons inicais que quero apresentar na tela
@@ -78,13 +117,12 @@ export default {
       });
   },
 
+  // Aqui vou selecionar uma cor de acordo com o tiopo do pokemon
+  //   color_selected(tipo_pokemon) {
+  //     if (tipo_pokemon === elemento)
+  //     color('red')
+  //   }
 
-// Aqui vou selecionar uma cor de acordo com o tioo do pokemon
-  // color_selected(string) {
-  //   if (string === fire)
-
-
-  // }  
   // Estou extraindo o id de cada pokemon para puxar a imagem de acordo e colocando a primeira letra em Uppercasez'
   methods: {
     get_id(pokemon) {
@@ -93,15 +131,12 @@ export default {
     get_name(pokemon) {
       return pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     },
-    
+
     show_pokemon(id) {
-      axios
-      .get(`https://pokeapi.co/api/v2/pokemon/${id} `)
-      .then((response) => {
+      axios.get(`https://pokeapi.co/api/v2/pokemon/${id} `).then((response) => {
         this.selected_pokemon = response.data;
-        this.show_dialog = !this.show_dialog;
-      }); 
-    }
+      });
+    },
   },
   computed: {
     pokemons_filtrados() {
