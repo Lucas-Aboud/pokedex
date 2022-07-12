@@ -81,7 +81,7 @@ import axios from "axios";
 
 export default {
   name: "App",
-
+  // Declaração das variáveis do componente 
   data() {
     return {
       pokemons: [],
@@ -90,7 +90,7 @@ export default {
       modal_pokemon: null,
     };
   },
-  //  Aqui eu chamo os 151 pokemons inicais que quero apresentar na tela
+  //  Requisição que busca os 151 pokemons iniciais para ficar na tela
   mounted() {
     axios
       .get("https://pokeapi.co/api/v2/pokemon?limit=151")
@@ -99,16 +99,20 @@ export default {
       });
   },
 
-  // Estou extraindo o id de cada pokemon para puxar a imagem de acordo e colocando a primeira letra em Uppercasez'
+  // Estou extraindo o id de cada pokemon para puxar a imagem de acordo e colocando a primeira letra em Uppercase'
   methods: {
+    // Esse metodo retorna o id de cada pokemon
     get_id(pokemon) {
       if (pokemon && pokemon.url) return pokemon.url.split("/")[6];
     },
+
+    // Esse metodo retorna o Nome com letra maiúscula
     get_name(pokemon) {
       if (pokemon && pokemon.name)
         return pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     },
 
+    // Esse metodo abre o modal e faz a requisição de mais infos do pokemon 
     toggle_modal(pokemon) {
       this.modal_pokemon = pokemon;
 
@@ -120,7 +124,7 @@ export default {
           this.show_dialog = true;
         });
     },
-
+    // Esse método faria a busca do pokemon por nome ou ID  mas nao deu tempo de implementar
     show_pokemon(id) {
       axios.get(`https://pokeapi.co/api/v2/pokemon/${id} `).then((response) => {
         this.selected_pokemon = response.data;
